@@ -2,23 +2,6 @@ var map = L.map('mapid',
     {minZoom: 6,
     maxZoom: 9}).setView([50.6256442,7.7083538], 6);
 
-var slider = document.getElementById("myRange");
-slider.oninput = function() {
-    console.log(this.value);
-    var currentYear; 
-    switch (true) {
-        case this.value === "1":
-            currentYear = 1998;
-            break;
-        case this.value === "2":
-            currentYear = 2008;
-            break;
-        case this.value === "3":
-            currentYear = 2018;
-            break;
-    } 
-    console.log(currentYear);
-  } 
 
 L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -38,8 +21,28 @@ getJson('./Deutschland.geojson', function (staatsgrenzen) {
     drawStaatsgrenzen (staatsgrenzen);
 });
 
-getJson('./data/20181.geojson', function (datenjahr2018) {
-    drawIcons (datenjahr2018);  
+getJson('./data/data.json', function (datenjahre) {
+    console.log(datenjahre);
+    var datenLayer = drawIcons (datenjahre["2018"]); 
+    
+    var slider = document.getElementById("myRange");
+    slider.oninput = function() {
+        datenLayer.clearLayers ();
+        console.log(this.value);
+        var currentYear; 
+        switch (true) {
+            case this.value === "1":
+            datenLayer.addData(datenjahre["1998"]);
+                break;
+            case this.value === "2":
+            datenLayer.addData(datenjahre["2008"]);
+                break;
+            case this.value === "3":
+            datenLayer.addData(datenjahre["2018"]);
+                break;
+        } 
+        console.log(currentYear);
+      } 
 });
 
 
@@ -63,16 +66,15 @@ function hideRest(relevantBoundaries) {
     }).addTo(map);
 };
 
-function drawIcons(datenjahr2018) {
-  
-    L.geoJSON(datenjahr2018, {
+function drawIcons(datenjahr) {
+  var layer = L.geoJSON(datenjahr, {
         onEachFeature: function (feature, layer) {
         var props="<h3>"+feature.properties.Ort+"</h3>";
           layer.bindPopup(props);
-          console.log (feature);
-          console.log (layer);
         }
-    }).addTo(map)
+    });
+    layer.addTo(map);
+    return layer;
 };
 
 function getPopup (layer){
