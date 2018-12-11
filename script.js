@@ -1,4 +1,24 @@
-var map = L.map('mapid').setView([50.6256442,7.7083538], 6);
+var map = L.map('mapid', 
+    {minZoom: 6,
+    maxZoom: 9}).setView([50.6256442,7.7083538], 6);
+
+var slider = document.getElementById("myRange");
+slider.oninput = function() {
+    console.log(this.value);
+    var currentYear; 
+    switch (true) {
+        case this.value === "1":
+            currentYear = 1998;
+            break;
+        case this.value === "2":
+            currentYear = 2008;
+            break;
+        case this.value === "3":
+            currentYear = 2018;
+            break;
+    } 
+    console.log(currentYear);
+  } 
 
 L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -44,13 +64,23 @@ function hideRest(relevantBoundaries) {
 };
 
 function drawIcons(datenjahr2018) {
-    L.geoJson(datenjahr2018).addTo(map)
+  
+    L.geoJSON(datenjahr2018, {
+        onEachFeature: function (feature, layer) {
+        var props="<h3>"+feature.properties.Ort+"</h3>";
+          layer.bindPopup(props);
+          console.log (feature);
+          console.log (layer);
+        }
+    }).addTo(map)
 };
 
-
-/*L.geoJSON(myLines, {
-    style: myStyle
-}).addTo(map);*/
+function getPopup (layer){
+  
+    var html="";
+    html="<h3>"+props+"</h3>";
+    return html;
+}
 
 
 function getJson(path, callback) {
