@@ -1,5 +1,5 @@
 var map = L.map('mapid', 
-    {minZoom: 6,
+    {minZoom: 1,
     maxZoom: 9}).setView([50.6256442,7.7083538], 6);
 
 
@@ -50,7 +50,7 @@ function drawStaatsgrenzen(staatsgrenzen) {
     var myStyle = {
         "color":"hotpink",
         "weight": 3,
-        "opacity": 0.5
+        "opacity": 0.5,
     };
     L.geoJSON(staatsgrenzen, {style: myStyle}).addTo(map);
 };
