@@ -24,6 +24,7 @@ h1 {
     -webkit-transition: .2s;
     transition: opacity .2s;
 }
+
 .slidecontainer {
     background-color: #ffffffa6;
     padding: 20px;

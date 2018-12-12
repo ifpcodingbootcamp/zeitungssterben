@@ -28,19 +28,37 @@ getJson('./data/data.json', function (datenjahre) {
     var output = document.getElementById("labeldisplay");
     slider.oninput = function() {
         datenLayer.clearLayers ();
-        console.log(this.value);
         var currentYear; 
         switch (true) {
             case this.value === "1":
-            datenLayer.addData(datenjahre["1998"]);
+            var geojsonLayer = L.geoJSON(datenjahre["1998"], {
+                onEachFeature: function (feature, layer) {
+                var props="<h3>"+feature.properties.Ort+"</h3>";
+                layer.bindPopup(props);
+                }
+            });
+            datenLayer.addLayer(geojsonLayer);
                 output.innerHTML = "1998";
                 break;
             case this.value === "2":
-            datenLayer.addData(datenjahre["2008"]);
+                var geojsonLayer = L.geoJSON(datenjahre["2008"], {
+                    onEachFeature: function (feature, layer) {
+                    var props="<h3>"+feature.properties.Ort+"</h3>";
+                    layer.bindPopup(props);
+                    }
+                });
+                datenLayer.addLayer(geojsonLayer);
+                
                 output.innerHTML = "2008";
                 break;
-            case this.value === "3":
-            datenLayer.addData(datenjahre["2018"]);
+                case this.value === "3":
+                var geojsonLayer = L.geoJSON(datenjahre["2018"], {
+                onEachFeature: function (feature, layer) {
+                var props="<h3>"+feature.properties.Ort+"</h3>";
+                layer.bindPopup(props);
+                }
+                });
+                datenLayer.addLayer(geojsonLayer);
                 output.innerHTML = "2018";
                 break;
         } 
@@ -56,7 +74,7 @@ function drawStaatsgrenzen(staatsgrenzen) {
     };
     L.geoJSON(staatsgrenzen, {style: myStyle}).addTo(map);
 };
-
+ 
 function hideRest(relevantBoundaries) {
     var secondStyle = {
         "color": "white",
@@ -69,15 +87,40 @@ function hideRest(relevantBoundaries) {
 };
 
 function drawIcons(datenjahr) {
-  var layer = L.geoJSON(datenjahr, {
+    var markers = L.markerClusterGroup({
+            maxClusterRadius: 2
+    });
+
+    var layer = L.geoJSON(datenjahr, {
         onEachFeature: function (feature, layer) {
         var props="<h3>"+feature.properties.Ort+"</h3>";
           layer.bindPopup(props);
         }
     });
-    layer.addTo(map);
-    return layer;
+    markers.addLayer(layer);
+    map.addLayer(markers);
+    return markers;
 };
+
+
+
+/*spiderfyShapePositions: function(count, centerPt) {
+    var distanceFromCenter = 35,
+        markerDistance = 45,
+        lineLength = markerDistance * (count - 1),
+        lineStart = centerPt.y - lineLength / 2,
+        res = [],
+        i;
+
+    res.length = count;
+
+    for (i = count - 1; i >= 0; i--) {
+        res[i] = new Point(centerPt.x + distanceFromCenter, lineStart + markerDistance * i);
+    }
+
+    return res;
+}*/
+
 
 function getPopup (layer){
   
