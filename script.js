@@ -22,10 +22,10 @@ getJson('./Deutschland.geojson', function (staatsgrenzen) {
 });
 
 getJson('./data/data.json', function (datenjahre) {
-    console.log(datenjahre);
     var datenLayer = drawIcons (datenjahre["2018"]); 
     
     var slider = document.getElementById("myRange");
+    var output = document.getElementById("labeldisplay");
     slider.oninput = function() {
         datenLayer.clearLayers ();
         console.log(this.value);
@@ -33,15 +33,17 @@ getJson('./data/data.json', function (datenjahre) {
         switch (true) {
             case this.value === "1":
             datenLayer.addData(datenjahre["1998"]);
+                output.innerHTML = "1998";
                 break;
             case this.value === "2":
             datenLayer.addData(datenjahre["2008"]);
+                output.innerHTML = "2008";
                 break;
             case this.value === "3":
             datenLayer.addData(datenjahre["2018"]);
+                output.innerHTML = "2018";
                 break;
         } 
-        console.log(currentYear);
       } 
 });
 

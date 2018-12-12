@@ -5,7 +5,50 @@
 
 h1 {
     color: hotpink;
+    font-family: Arial, Helvetica, sans-serif;
     height: 40px;
 }
 
-#mapid { height: calc(100% - 40px); }
+#mapid { 
+    height: calc(100% - 40px); 
+    z-index: 1;}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 10px;
+    background: hotpink;
+    outline: none;
+    opacity: 1;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+.slidecontainer {
+    background-color: #ffffffa6;
+    padding: 20px;
+    top: 150px;
+    right: 55px;
+    position: absolute;
+    z-index: 2;
+}
+.sliderlabel {
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 15px;
+    display: inline-block;
+    float: left;
+}
+.sliderlabel.right {
+    float: right; 
+}
+
+.sliderlabel.middle {
+    display: block;
+    float: none;
+    width: 100%;
+    margin: 20px auto 0 auto;
+    font-size: x-large;
+    text-align: center;
+    color: hotpink;
+}
