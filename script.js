@@ -88,7 +88,25 @@ function hideRest(relevantBoundaries) {
 
 function drawIcons(datenjahr) {
     var markers = L.markerClusterGroup({
-            maxClusterRadius: 2
+            maxClusterRadius: 2,
+            iconCreateFunction: function (cluster) {
+                var childCount = cluster.getChildCount();
+        
+                var c = ' our-icon-';
+                if (childCount < 3) {
+                    c += 'small';
+                } else if (childCount < 8) {
+                    c += 'medium';
+                } else {
+                    c += 'large';
+                }
+        
+                return new L.DivIcon({html: '<div class="icon">'+childCount + '</div>', className: c, iconSize: new L.Point(20, 20)});
+               //return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+            },
+        
+
+
     });
 
     var layer = L.geoJSON(datenjahr, {
