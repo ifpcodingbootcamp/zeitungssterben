@@ -68,17 +68,26 @@ h1 {
 }
 
 .our-icon-small .icon{
-    background: #FF7469;
+    /**background: #FF7469;*/
+    /**background: #800000;*/
+    background: #D4FFDB;
+    color: #333;
 }
 
 .our-icon-medium .icon{
-    color: #666;
-    background: #C8FF69;
+    /**color: #666;*/
+    /**background: #C8FF69;*/
+    /**background: #5A0000;*/
+    background:#69FF83;
+    color: #333;
 }
 
 .our-icon-large .icon{
-    color: #666;
+    /**color: #666;
     background: #69FF83;
+    background: #330000;*/
+    background: #0FFD38;
+    color: #333;
 }
 
 .our-icon-default .icon{

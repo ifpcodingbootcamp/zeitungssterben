@@ -116,7 +116,7 @@ function drawIcons(datenjahr) {
                 var c = ' our-icon-';
                 if (childCount < 3) {
                     c += 'small';
-                } else if (childCount < 8) {
+                } else if (childCount < 5) {
                     c += 'medium';
                 } else {
                     c += 'large';
